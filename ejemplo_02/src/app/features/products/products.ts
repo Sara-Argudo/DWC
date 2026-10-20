@@ -28,4 +28,25 @@ export class Products {
   category = signal(Category.Electronics);
   image = signal('');
 
+  setTitle(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.title.set(input.value);
+  }
+  setPrice(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.price.set(input.valueAsNumber);
+  }
+  setDescription(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    this.description.set(textarea.value);
+  }
+  setCategory(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.category.set(select.value as Category);
+  }
+  setImage(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.image.set(input.value);
+  }
+
 }
