@@ -56,7 +56,6 @@ export class Products {
     const newProduct: Product = {
     id: id,
     title: this.title(),
-    // Si el campo del precio está vacío, su valor es NaN: se guarda 0.
     price: this.price() || 0,
     description: this.description(),
     category: this.category(),
