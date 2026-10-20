@@ -10,4 +10,14 @@ import { Product } from '../../core/models/product.model';
 })
 export class Products {
   products = signal<Product[]>(PRODUCTS);
+
+  showForm = signal(false);
+
+  openForm(){
+    this.showForm.set(true);
+  }
+
+  closeForm(){
+    this.showForm.set(false);
+  }
 }
