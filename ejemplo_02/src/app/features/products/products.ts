@@ -67,4 +67,9 @@ export class Products {
     this.closeForm();
   }
 
+  deleteProduct(id: number) {
+    this.products.update(products => products.filter(product => product.id !== id));
+  }
+
+
 }
