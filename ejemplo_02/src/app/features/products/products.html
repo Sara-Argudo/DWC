@@ -1,0 +1,24 @@
+<h1>PRODUCTOS</h1>
+
+<section>
+    @for (product of products(); track product.id) {
+        <article>
+            <img [src]="product.image" [alt]="product.title" />
+            <h2>{{ product.title }}</h2>
+            <button type="button" (click)="openForm()" [attr.aria-expanded]="showForm()">Nuevo</button>
+                @if (showForm()) {
+                <div>
+                <h2>Nuevo producto</h2>
+                <p>Aquí irán los campos del producto.</p>
+                <button type="button">Guardar</button>
+                <button type="button" (click)="closeForm()">Cancelar</button>
+                </div>
+                }
+            <p>{{ product.category }}</p>
+            <p>{{ product.price }} €</p>
+            <p>★ {{ product.rating.rate }} ({{ product.rating.count }} valoraciones)</p>
+        </article>
+    }@empty {
+        <p>no hay productos</p>
+    }
+</section>
