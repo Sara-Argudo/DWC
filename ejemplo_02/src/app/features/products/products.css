@@ -1,0 +1,12 @@
+/* Rejilla de 5 cards por fila */
+section {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 1.5rem;
+}
+/* Card */
+article {
+border: 1px solid #d1d5db;
+border-radius: 8px;
+/* ... */
+}
