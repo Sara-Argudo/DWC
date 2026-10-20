@@ -53,14 +53,14 @@ ng version
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/dwec.git
-cd dwec
+git clone https://github.com/Sara-Argudo/DWC.git
+cd DWC
 ```
 
 2. Entrar en la carpeta del proyecto:
 
 ```bash
-cd 02-angular-basico
+cd ejemplo_02
 ```
 
 3. Instalar las dependencias:
