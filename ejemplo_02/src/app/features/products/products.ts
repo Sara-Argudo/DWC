@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { PRODUCTS } from '../../core/mocks/products.mock';
+import { Product } from '../../core/models/product.model';
 
 @Component({
   imports: [],
@@ -6,4 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './products.css',
   templateUrl: './products.html',
 })
-export class Products {}
+export class Products {
+  products = signal<Product[]>(PRODUCTS);
+}
