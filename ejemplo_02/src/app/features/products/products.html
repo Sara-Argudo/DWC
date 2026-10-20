@@ -1,1 +1,15 @@
-<p>products works!</p>
+<h1>PRODUCTOS</h1>
+
+<section>
+    @for (product of products(); track product.id) {
+        <article>
+            <img [src]="product.image" [alt]="product.title" />
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.category }}</p>
+            <p>{{ product.price }} €</p>
+            <p>★ {{ product.rating.rate }} ({{ product.rating.count }} valoraciones)</p>
+        </article>
+    }@empty {
+        <p>no hay productos</p>
+    }
+</section>
