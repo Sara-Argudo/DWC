@@ -8,10 +8,36 @@
             <button type="button" (click)="openForm()" [attr.aria-expanded]="showForm()">Nuevo</button>
                 @if (showForm()) {
                 <div>
-                <h2>Nuevo producto</h2>
-                <p>Aquí irán los campos del producto.</p>
-                <button type="button">Guardar</button>
-                <button type="button" (click)="closeForm()">Cancelar</button>
+                    <h2>Nuevo producto</h2>
+
+                    <label for="title">Título</label>
+                    <input id="title" type="text" [value]="title()" (input)="setTitle($event)" />
+
+                    <label for="price">Precio (€)</label>
+                    <input id="price" type="number" min="0" step="0.01" [value]="price()"
+                    (input)="setPrice($event)" />
+
+                    <label for="description">Descripción</label>
+                    <textarea id="description" rows="3" [value]="description()"
+                    (input)="setDescription($event)"></textarea>
+
+                    <label for="category">Categoría</label>
+                    <select id="category" (input)="setCategory($event)">
+                    @for (option of categories; track option) {
+                    <option [value]="option" [selected]="option === category()">{{ option }}</option>
+                    }
+                    </select>
+
+                    <label for="image">Imagen</label>
+                    <input id="image" type="text" placeholder="/images/1.png" [value]="image()"
+                    (input)="setImage($event)" />
+                    
+                    <div>
+                        <button type="button" (click)="addProduct()" [disabled]="!title()">Guardar</button>
+                        <button type="button" (click)="closeForm()">Cancelar</button>
+                    </div>
+
+                
                 </div>
                 }
             <p>{{ product.category }}</p>
