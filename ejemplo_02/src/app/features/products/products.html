@@ -43,6 +43,8 @@
             <p>{{ product.category }}</p>
             <p>{{ product.price }} €</p>
             <p>★ {{ product.rating.rate }} ({{ product.rating.count }} valoraciones)</p>
+            <button type="button" (click)="deleteProduct(product.id)" [attr.aria-label]="'Borrar ' +
+            product.title">Borrar</button>
         </article>
     }@empty {
         <p>no hay productos</p>
