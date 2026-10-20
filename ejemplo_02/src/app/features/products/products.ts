@@ -49,4 +49,23 @@ export class Products {
     this.image.set(input.value);
   }
 
+  addProduct() {
+    const lastProduct = this.products().at(-1);
+    const id = lastProduct ? lastProduct.id + 1 : 1;
+
+    const newProduct: Product = {
+    id: id,
+    title: this.title(),
+    // Si el campo del precio está vacío, su valor es NaN: se guarda 0.
+    price: this.price() || 0,
+    description: this.description(),
+    category: this.category(),
+    image: this.image(),
+    rating: { rate: 0, count: 0 }
+    };
+
+    this.products.update(products => [...products, newProduct]);
+    this.closeForm();
+  }
+
 }
