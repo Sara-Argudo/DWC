@@ -1,7 +1,8 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, effect } from '@angular/core';
 import { PRODUCTS } from '../../core/mocks/products.mock';
 import { Product } from '../../core/models/product.model';
 import { Category } from '../../core/models/category.model';
+const STORAGE_KEY = 'products';
 
 
 @Component({
@@ -162,5 +163,28 @@ export class Products {
   setSearchCategory(event: Event) {
     const select = event.target as HTMLSelectElement;
     this.searchCategory.set(select.value as Category | 'all');
+  }
+
+  loadProducts(): Product[] {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === null) {
+      return PRODUCTS;
+    }
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : PRODUCTS;
+    } catch {
+      return PRODUCTS;
+    }
+  }
+
+  constructor() {
+    // Carga: initializa la lista desde localStorage (o el mock)
+    this.products.set(this.loadProducts());
+
+    // Guardado: cada vez que products cambia, se escribe en localStorage
+    effect(() => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.products()));
+    });
   }
 }
