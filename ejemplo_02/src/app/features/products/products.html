@@ -31,13 +31,13 @@
                     <label for="image">Imagen</label>
                     <input id="image" type="text" placeholder="/images/1.png" [value]="image()"
                     (input)="setImage($event)" />
-                    
+
                     <div>
                         <button type="button" (click)="addProduct()" [disabled]="!title()">Guardar</button>
                         <button type="button" (click)="closeForm()">Cancelar</button>
                     </div>
 
-                
+
                 </div>
                 }
             <p>{{ product.category }}</p>

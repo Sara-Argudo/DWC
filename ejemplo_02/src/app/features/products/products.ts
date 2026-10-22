@@ -12,6 +12,8 @@ import { Category } from '../../core/models/category.model';
 export class Products {
   products = signal<Product[]>(PRODUCTS);
 
+  categories = Object.values(Category);
+
   showForm = signal(false);
 
   openForm(){
