@@ -140,6 +140,7 @@ export class Products {
   totalProducts = computed(() => this.products().length);
 
   searchText = signal('');
+  searchCategory = signal<Category | 'all'>('all');
   setSearchText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchText.set(input.value);
@@ -147,9 +148,19 @@ export class Products {
 
   filteredProducts = computed(() => {
     const text = this.searchText().trim().toLowerCase();
-    return this.products().filter(product => product.title.toLowerCase().includes(text));
+    const category = this.searchCategory();
+    return this.products().filter(
+      product =>
+        product.title.toLowerCase().includes(text) &&
+        (category === 'all' || product.category === category)
+    );
   });
+
 
   totalFilteredProducts = computed(() => this.filteredProducts().length);
 
+  setSearchCategory(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.searchCategory.set(select.value as Category | 'all');
+  }
 }
