@@ -78,32 +78,39 @@ export class Products {
 
   updateProduct() {
     const selected = this.selectedProduct();
-    if (!selected) return;
-
-    const updated: Product = {
-      ...selected,
-      title: this.title(),
-      price: this.price() || 0,
-      description: this.description(),
-      category: this.category(),
-      image: this.image()
+    if (!selected) {
+    return;
+    }
+    
+    const updatedProduct: Product = {
+    ...selected,
+    title: this.title(),
+    price: this.price() || 0,
+    description: this.description(),
+    category: this.category(),
+    image: this.image()
     };
-
+    
     this.products.update(products =>
-      products.map(product => (product.id === selected.id ? updated : product))
+    products.map(product => (product.id === updatedProduct.id ? updatedProduct : product))
     );
     this.closeForm();
   }
 
-  saveProduct() {
-    if (this.mode() === 'edit') {
-      this.updateProduct();
-    } else {
-      this.addProduct();
-    }
+  save() {
+    if (this.mode() === 'new') {
+    this.addProduct();
+  } else {
+    this.updateProduct();
+  }
   }
 
   deleteProduct(id: number) {
+    const selected = this.selectedProduct();
+    if (selected && selected.id === id) {
+      this.closeForm();
+    }
+
     this.products.update(products => products.filter(product => product.id !== id));
   }
 
