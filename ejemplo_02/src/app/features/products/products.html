@@ -33,9 +33,7 @@
             <input id="image" type="text" placeholder="/images/1.png" [value]="image()"
             (input)="setImage($event)" />
 
-            <button type="button" (click)="saveProduct()">
-                {{ mode() === 'new' ? 'Guardar' : 'Actualizar' }}
-            </button>
+            <button type="button" (click)="save()" [disabled]="!title()">Guardar</button>
         </div>
     }
 
