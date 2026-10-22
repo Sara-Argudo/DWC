@@ -1,9 +1,15 @@
-<h1>Productos ({{ totalProducts() }})</h1>
+<h1>Productos ({{ totalFilteredProducts() }} de {{ totalProducts() }})</h1>
 
+
+<div class="toolbar">
+    <button type="button" (click)="newProduct()" [attr.aria-expanded]="showForm()">Nuevo</button>
+    <search>
+        <label for="search">Buscar por título</label>
+        <input id="search" type="search" [value]="searchText()" (input)="setSearchText($event)" />
+    </search>
+</div>
 
 <section>
-    <button type="button" (click)="newProduct()" [attr.aria-expanded]="showForm()">Nuevo</button>
-
     @if (showForm()) {
         <div>
             @if (mode() === 'new') {
@@ -38,7 +44,7 @@
         </div>
     }
 
-    @for (product of products(); track product.id) {
+    @for (product of filteredProducts(); track product.id) {
         <article>
             <img [src]="product.image" [alt]="product.title" />
             <h2>{{ product.title }}</h2>

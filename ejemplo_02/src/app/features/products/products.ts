@@ -138,4 +138,18 @@ export class Products {
   }
 
   totalProducts = computed(() => this.products().length);
+
+  searchText = signal('');
+  setSearchText(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchText.set(input.value);
+  }
+
+  filteredProducts = computed(() => {
+    const text = this.searchText().trim().toLowerCase();
+    return this.products().filter(product => product.title.toLowerCase().includes(text));
+  });
+
+  totalFilteredProducts = computed(() => this.filteredProducts().length);
+
 }
