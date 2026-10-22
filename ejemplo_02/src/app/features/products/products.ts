@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { PRODUCTS } from '../../core/mocks/products.mock';
 import { Product } from '../../core/models/product.model';
 import { Category } from '../../core/models/category.model';
+
 
 @Component({
   imports: [],
@@ -135,4 +136,6 @@ export class Products {
     this.selectedProduct.set(undefined);
     this.showForm.set(false);
   }
+
+  totalProducts = computed(() => this.products().length);
 }
