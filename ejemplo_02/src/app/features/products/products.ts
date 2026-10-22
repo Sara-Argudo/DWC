@@ -10,19 +10,15 @@ import { Category } from '../../core/models/category.model';
   templateUrl: './products.html',
 })
 export class Products {
+
   products = signal<Product[]>(PRODUCTS);
 
   categories = Object.values(Category);
 
+  mode = signal<'new' | 'edit'>('new');
+  selectedProduct = signal<Product | undefined>(undefined);
+
   showForm = signal(false);
-
-  openForm(){
-    this.showForm.set(true);
-  }
-
-  closeForm(){
-    this.showForm.set(false);
-  }
 
   title = signal('');
   price = signal(0);
@@ -52,10 +48,10 @@ export class Products {
   }
 
   addProduct() {
+
     const lastProduct = this.products().at(-1);
     const id = lastProduct ? lastProduct.id + 1 : 1;
-
-    const newProduct: Product = {
+    const product: Product = {
     id: id,
     title: this.title(),
     price: this.price() || 0,
@@ -64,14 +60,72 @@ export class Products {
     image: this.image(),
     rating: { rate: 0, count: 0 }
     };
-
-    this.products.update(products => [...products, newProduct]);
+    
+    this.products.update(products => [...products, product]);
     this.closeForm();
+}
+
+  editProduct(product: Product) {
+    this.mode.set('edit');
+    this.selectedProduct.set(product);
+    this.title.set(product.title);
+    this.price.set(product.price);
+    this.description.set(product.description);
+    this.category.set(product.category);
+    this.image.set(product.image);
+    this.showForm.set(true);
+  }
+
+  updateProduct() {
+    const selected = this.selectedProduct();
+    if (!selected) return;
+
+    const updated: Product = {
+      ...selected,
+      title: this.title(),
+      price: this.price() || 0,
+      description: this.description(),
+      category: this.category(),
+      image: this.image()
+    };
+
+    this.products.update(products =>
+      products.map(product => (product.id === selected.id ? updated : product))
+    );
+    this.closeForm();
+  }
+
+  saveProduct() {
+    if (this.mode() === 'edit') {
+      this.updateProduct();
+    } else {
+      this.addProduct();
+    }
   }
 
   deleteProduct(id: number) {
     this.products.update(products => products.filter(product => product.id !== id));
   }
 
+  clearFields() {
+    this.title.set('');
+    this.price.set(0);
+    this.description.set('');
+    this.category.set(Category.Electronics);
+    this.image.set('');
+  }
 
+  newProduct() {
+    this.clearFields();
+    this.mode.set('new');
+    this.selectedProduct.set(undefined);
+    this.showForm.set(true);
+  }
+
+  closeForm() {
+    this.clearFields();
+    this.mode.set('new');
+    this.selectedProduct.set(undefined);
+    this.showForm.set(false);
+  }
 }
