@@ -6,6 +6,14 @@
     <search>
         <label for="search">Buscar por título</label>
         <input id="search" type="search" [value]="searchText()" (input)="setSearchText($event)" />
+
+        <label for="search-category">Categoría</label>
+        <select id="search-category" (change)="setSearchCategory($event)">
+            <option value="all" [selected]="searchCategory() === 'all'">Todas</option>
+            @for (option of categories; track option) {
+                <option [value]="option" [selected]="option === searchCategory()">{{ option }}</option>
+            }
+        </select>
     </search>
 </div>
 
