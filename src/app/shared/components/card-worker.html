@@ -1,0 +1,34 @@
+<article class="tarjeta">
+  <img
+    class="foto"
+    [src]="worker().imagen"
+    [alt]="'Foto de ' + worker().nombre"
+  >
+
+  <h2>{{ worker().nombre }}</h2>
+  <p class="datos">
+    {{ worker().puesto }} · {{ worker().departamento }}
+  </p>
+  <p>
+    ❤️ {{ worker().likes }}
+    {{ worker().likes === 1 ? 'like' : 'likes' }}
+  </p>
+
+  <div class="acciones">
+    <button type="button" (click)="darLike()">
+      👍 Like
+    </button>
+
+    <button type="button" (click)="darUnlike()">
+      👎 Unlike
+    </button>
+
+    <button type="button" (click)="quitarTodosLosLikes()">
+      🗑️ Quitar likes
+    </button>
+
+    <button type="button" (click)="eliminarTrabajador()">
+      ❌ Eliminar
+    </button>
+  </div>
+</article>

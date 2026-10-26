@@ -1,0 +1,47 @@
+<h1 id="titulo-trabajadores">
+  Trabajadores
+  <span class="totales">
+    ({{ totalFiltrados() }} de {{ totalTrabajadores() }})
+  </span>
+</h1>
+
+<div class="filtro">
+  <label for="filtro-departamento">Departamento</label>
+
+  <select
+    id="filtro-departamento"
+    (change)="cambiarDepartamento($event)"
+  >
+    <option
+      value=""
+      [selected]="departamentoSeleccionado() === ''"
+    >
+      Todos
+    </option>
+
+    @for (departamento of departamentos(); track departamento) {
+      <option
+        [value]="departamento"
+        [selected]="departamentoSeleccionado() === departamento"
+      >
+        {{ departamento }}
+      </option>
+    }
+  </select>
+</div>
+
+<ul>
+  @for (worker of trabajadoresFiltrados(); track worker.id) {
+    <li>
+      <app-card-worker
+        [worker]="worker"
+        (like)="sumarLike($event)"
+        (unlike)="restarLike($event)"
+        (quitarLikes)="quitarLikes($event)"
+        (eliminar)="eliminarTrabajador($event)"
+      />
+    </li>
+  } @empty {
+    <li>No hay trabajadores.</li>
+  }
+</ul>
