@@ -1,0 +1,191 @@
+/*
+  Los estilos se aplican por etiqueta (section, article, img...) para no
+  tener que poner clases en el HTML. Angular encapsula estos estilos en el
+  componente, así que no afectan al resto de la aplicación.
+*/
+
+:host {
+  display: block;
+  padding: 1.5rem;
+  font-family: system-ui, sans-serif;
+  color: #1f2937;
+}
+
+h1 {
+  margin: 0 0 1rem;
+}
+
+/* Botones */
+button {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #1d4ed8;
+  border-radius: 6px;
+  background: #1d4ed8;
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1e40af;
+}
+
+button:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Filtro: en la misma línea que el botón Nuevo, a su izquierda */
+search {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+search > label {
+  margin-top: 0;
+}
+
+/* Separa el filtro por título del filtro por categoría */
+search > input {
+  margin-right: 0.75rem;
+}
+
+/* Div de alta de producto */
+:host > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 32rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+label {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+  padding: 0.5rem;
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+  font: inherit;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Botones Guardar y Cancelar */
+:host > div > div {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Botón Cancelar: el segundo botón */
+:host > div > div > button + button {
+  background: #ffffff;
+  color: #1d4ed8;
+}
+
+:host > div > div > button + button:hover {
+  background: #eff6ff;
+}
+
+/* Rejilla de 5 cards por fila */
+section {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Card */
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+}
+
+img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+/* Botones Editar y Borrar de cada card: al final de la card */
+article > div {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+article > div > button {
+  flex: 1;
+}
+
+/* Botón Borrar: el segundo botón, en rojo */
+article > div > button + button {
+  border-color: #b91c1c;
+  background: #b91c1c;
+}
+
+article > div > button + button:hover {
+  background: #991b1b;
+}
+
+/* Categoría */
+h2 + p {
+  color: #4b5563;
+  text-transform: capitalize;
+}
+
+/* Precio */
+h2 + p + p {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* En pantallas más estrechas se reducen las columnas */
+@media (max-width: 1200px) {
+  section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  section {
+    grid-template-columns: 1fr;
+  }
+}

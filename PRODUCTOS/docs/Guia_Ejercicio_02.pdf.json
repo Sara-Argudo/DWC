@@ -1,0 +1,7 @@
+{
+  "badge": "Angular 21 · Ejercicio 02",
+  "title": "Signals y directivas<br>en Angular",
+  "subtitle": "Guía paso a paso: un CRUD de productos con <b>signal</b>, <b>computed</b>, <b>effect</b> y el control de flujo <b>@if</b> / <b>@for</b>",
+  "chips": ["signal()", "computed()", "effect()", "@for · @if", "Inmutabilidad", "localStorage"],
+  "footer": "Signals y directivas en Angular · Ejercicio 02"
+}

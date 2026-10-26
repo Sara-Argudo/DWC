@@ -1,0 +1,41 @@
+.reactividad-title {
+  margin: 2rem 0 1rem;
+}
+
+.reactividad-check {
+  margin-bottom: 1rem;
+}
+
+/* Los dos casos uno al lado del otro; en pantallas estrechas, uno debajo de otro */
+.reactividad-cases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.reactividad-case {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+}
+
+.reactividad-case__title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.reactividad-case__value {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.reactividad-case__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

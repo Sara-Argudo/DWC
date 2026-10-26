@@ -1,0 +1,43 @@
+<section aria-labelledby="reactividad-title">
+  <h2 id="reactividad-title" class="reactividad-title">Reactividad</h2>
+
+  <!--
+    Botón que no cambia ningún dato: su (click) solo provoca que Angular revise
+    todo el componente y pinte lo que haya cambiado (por ejemplo, dato1 después
+    de incrementarlo dentro de un setTimeout).
+  -->
+  <button type="button" class="reactividad-check" (click)="checkView()">Revisar componente</button>
+
+  <div class="reactividad-cases">
+    <!--
+      Sin signal: dato1 es una propiedad numérica normal.
+      - Incrementar: dato1 cambia dentro del (click) y la vista se repinta.
+      - Incrementar con setTimeout: dato1 cambia 2 segundos después, fuera de un
+        evento de plantilla. Sin zone.js, Angular no se entera: el valor nuevo se ve
+        en la consola, pero no en la vista hasta pulsar «Revisar componente».
+    -->
+    <div class="reactividad-case" role="group" aria-labelledby="sin-signal-title">
+      <h3 id="sin-signal-title" class="reactividad-case__title">Sin signal</h3>
+      <p class="reactividad-case__value" aria-live="polite">dato1: {{ dato1 }}</p>
+      <div class="reactividad-case__actions">
+        <button type="button" (click)="incrementDato1()">Incrementar</button>
+        <button type="button" (click)="incrementDato1WithTimeout()">Incrementar con setTimeout (2 s)</button>
+      </div>
+    </div>
+
+    <!--
+      Con signal: dato2 es un signal numérico y se lee con dato2().
+      - Incrementar: dato2.update() cambia el valor y la vista se repinta.
+      - Incrementar con setTimeout: el signal avisa a Angular aunque el cambio
+        ocurra fuera de un evento de plantilla, así que la vista se repinta sola.
+    -->
+    <div class="reactividad-case" role="group" aria-labelledby="con-signal-title">
+      <h3 id="con-signal-title" class="reactividad-case__title">Con signal</h3>
+      <p class="reactividad-case__value" aria-live="polite">dato2: {{ dato2() }}</p>
+      <div class="reactividad-case__actions">
+        <button type="button" (click)="incrementDato2()">Incrementar</button>
+        <button type="button" (click)="incrementDato2WithTimeout()">Incrementar con setTimeout (2 s)</button>
+      </div>
+    </div>
+  </div>
+</section>

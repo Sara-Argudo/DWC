@@ -1,0 +1,67 @@
+<section aria-labelledby="products-array-title">
+  <h2 id="products-array-title" class="products-array-title">Productos con array</h2>
+
+  <!--
+    Alta de un producto nuevo:
+    - (click) llama a addProduct(), que hace un push de newProduct al array products.
+    - El @for vuelve a recorrer el array y pinta la tarjeta del producto añadido.
+    - [disabled]="added" desactiva el botón una vez dado de alta, para no repetirlo.
+  -->
+  <div class="products-array-actions">
+    <button type="button" (click)="addProduct()" [disabled]="added">Dar de alta producto</button>
+    <p class="products-array-status" aria-live="polite">
+      @if (added) {
+        Producto «{{ newProduct.title }}» dado de alta.
+      }
+    </p>
+  </div>
+
+  <!--
+    Comparación con zoneless (setTimeout):
+    - (click) llama a addProductWithTimeout(), que hace el push 2 segundos después,
+      dentro de un setTimeout.
+    - Sin zone.js, Angular no se entera de ese push: el producto está en el array
+      (se ve en la consola), pero la tarjeta no aparece.
+    - "Comprobar vista" no cambia ningún dato: su (click) solo provoca que Angular
+      revise el componente, y entonces aparece la tarjeta del producto añadido.
+  -->
+  <div class="products-array-actions">
+    <button type="button" (click)="addProductWithTimeout()" [disabled]="delayedRequested">
+      Dar de alta con setTimeout (2 s)
+    </button>
+    <button type="button" (click)="checkView()">Comprobar vista</button>
+    <p class="products-array-status" aria-live="polite">
+      @if (delayedRequested) {
+        Producto «{{ delayedProduct.title }}» se añade al array en 2 s. Mira la consola y pulsa «Comprobar vista».
+      }
+    </p>
+  </div>
+
+  <!--
+    Listado de todos los artículos del array PRODUCTS:
+    - @for recorre el array y pinta una tarjeta por producto.
+    - track product.id indica a Angular cómo identificar cada elemento, para
+      no volver a crear en el DOM las tarjetas que no cambian.
+    - $index es la posición del elemento en el array: las 5 primeras imágenes
+      (la primera fila) se cargan con prioridad.
+    - @empty se muestra si el array está vacío.
+    - La lista <ul> / <li> indica a los lectores de pantalla cuántos productos hay.
+  -->
+  <ul class="products-array-grid">
+    @for (product of products; track product.id) {
+      <li>
+        <article class="product-card">
+          <div class="product-card__image">
+            <img [ngSrc]="product.image" [alt]="product.title" fill [priority]="$index < 5" />
+          </div>
+          <h3 class="product-card__title">{{ product.title }}</h3>
+          <p class="product-card__category">{{ product.category }}</p>
+          <p class="product-card__price">{{ product.price }} €</p>
+          <p class="product-card__rating">★ {{ product.rating.rate }} ({{ product.rating.count }} valoraciones)</p>
+        </article>
+      </li>
+    } @empty {
+      <li class="products-array-empty">No hay productos.</li>
+    }
+  </ul>
+</section>

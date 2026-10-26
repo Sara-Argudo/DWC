@@ -1,0 +1,97 @@
+.products-title {
+  margin: 0 0 1rem;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  max-width: 260px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+}
+
+/* Contenedor de la imagen: NgOptimizedImage en modo fill ocupa todo el contenedor,
+   que necesita position y un alto. object-fit: contain ajusta la imagen sin deformarla,
+   tenga la proporción que tenga. */
+.product-card__image {
+  position: relative;
+  height: 220px;
+}
+
+.product-card__image img {
+  object-fit: contain;
+}
+
+.product-card__title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.product-card__category {
+  margin: 0;
+  color: #555;
+  text-transform: capitalize;
+}
+
+.product-card__price {
+  margin: 0;
+  font-weight: bold;
+}
+
+.product-card__rating {
+  margin: 0;
+  color: #555;
+}
+
+.product-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-method {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+}
+
+.search-method__title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.search-method__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-method__text {
+  margin: 0;
+  color: #444;
+  line-height: 1.4;
+}
+
+.search-method__code {
+  margin: 0;
+  padding: 0.5rem;
+  overflow-x: auto;
+  background: #f4f4f4;
+  color: #222;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.product-search__empty {
+  margin: 0;
+  color: #555;
+}

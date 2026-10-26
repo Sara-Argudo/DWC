@@ -1,0 +1,9 @@
+<button (click)="cambiaProducto()">CAMBIAR AL 7</button>
+<img [ngSrc]="Product.image" [alt]="Product.title" width="300" height="300" />
+
+<h2>Producto {{ Product.id }}</h2>
+
+<h3>{{ Product.title }}</h3>
+<p>Categoría: {{ Product.category }}</p>
+<p>Precio: {{ Product.price }}</p>
+<p>Valoración: {{ Product.rating.rate }} ({{ Product.rating.count }} opiniones)</p>

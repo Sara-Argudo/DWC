@@ -1,0 +1,102 @@
+<section aria-labelledby="products-title">
+  <h1 id="products-title" class="products-title">Buscar producto</h1>
+
+  <!--
+    Búsqueda del artículo por id, hecha de tres formas:
+    1. Variable de plantilla (#idInput): se lee el valor del input con idInput.value
+       y se pasa como parámetro a search(), que lo convierte a número.
+    2. Two-way data binding con [(ngModel)]: el valor del input se sincroniza
+       automáticamente con la propiedad searchId del componente, y searchById()
+       la lee directamente. Requiere importar FormsModule en el componente.
+    3. Two-way data binding manual, sin ngModel: [value]="searchIdManual" lleva el
+       valor de la propiedad al input (propiedad → vista) y (input) llama a
+       updateSearchIdManual($event) en cada tecla, que guarda el valor del input
+       en la propiedad (vista → propiedad). Es lo que [(ngModel)] hace por dentro.
+    En todos los casos se busca con Enter (keyup.enter) o con el botón (click).
+  -->
+  <div class="product-search" role="search">
+    <!-- 1. Variable de plantilla -->
+    <section class="search-method" aria-labelledby="method-template-var">
+      <h2 id="method-template-var" class="search-method__title">1. Variable de plantilla</h2>
+      <div class="search-method__controls">
+        <label for="product-id">Id del artículo</label>
+        <input #idInput id="product-id" type="number" min="1" (keyup.enter)="search(idInput.value)" />
+        <button type="button" (click)="search(idInput.value)">Buscar</button>
+      </div>
+      <p class="search-method__text">
+        Se marca el input con <code>#idInput</code> y se lee su valor con <code>idInput.value</code>, que se
+        pasa como parámetro a <code>search()</code>. El método lo convierte a número con <code>Number()</code>.
+      </p>
+      <pre class="search-method__code"><code>&lt;input #idInput (keyup.enter)="search(idInput.value)" /&gt;
+&lt;button (click)="search(idInput.value)"&gt;Buscar&lt;/button&gt;</code></pre>
+    </section>
+
+    <!-- 2. Two-way data binding con ngModel -->
+    <section class="search-method" aria-labelledby="method-ngmodel">
+      <h2 id="method-ngmodel" class="search-method__title">2. Two-way binding con ngModel</h2>
+      <div class="search-method__controls">
+        <label for="product-id-binding">Id del artículo</label>
+        <input id="product-id-binding" type="number" min="1" [(ngModel)]="searchId" (keyup.enter)="searchById()" />
+        <button type="button" (click)="searchById()">Buscar</button>
+      </div>
+      <p class="search-method__text">
+        <code>[(ngModel)]</code> sincroniza automáticamente el input con la propiedad <code>searchId</code>
+        en los dos sentidos. <code>searchById()</code> lee la propiedad directamente, sin parámetros.
+        Requiere importar <code>FormsModule</code> en el componente.
+      </p>
+      <pre class="search-method__code"><code>&lt;input [(ngModel)]="searchId" (keyup.enter)="searchById()" /&gt;
+&lt;button (click)="searchById()"&gt;Buscar&lt;/button&gt;</code></pre>
+    </section>
+
+    <!-- 3. Two-way data binding manual: [value] + (input) -->
+    <section class="search-method" aria-labelledby="method-manual">
+      <h2 id="method-manual" class="search-method__title">3. Two-way binding manual</h2>
+      <div class="search-method__controls">
+        <label for="product-id-manual">Id del artículo</label>
+        <input
+          id="product-id-manual"
+          type="number"
+          min="1"
+          [value]="searchIdManual"
+          (input)="updateSearchIdManual($event)"
+          (keyup.enter)="searchByIdManual()"
+        />
+        <button type="button" (click)="searchByIdManual()">Buscar</button>
+      </div>
+      <p class="search-method__text">
+        <code>[value]="searchIdManual"</code> lleva el valor de la propiedad al input (propiedad → vista) y
+        <code>(input)</code> llama a <code>updateSearchIdManual($event)</code> en cada tecla, que guarda el
+        valor del input en la propiedad (vista → propiedad). Es lo que <code>[(ngModel)]</code> hace por dentro.
+      </p>
+      <pre class="search-method__code"><code>&lt;input [value]="searchIdManual"
+       (input)="updateSearchIdManual($event)"
+       (keyup.enter)="searchByIdManual()" /&gt;
+&lt;button (click)="searchByIdManual()"&gt;Buscar&lt;/button&gt;</code></pre>
+    </section>
+  </div>
+
+  <!--
+    Resultado de la búsqueda:
+    - @if (selectedArticulo): si se encontró el artículo, se muestra su tarjeta
+      usando interpolación {{ }} y [ngSrc] (NgOptimizedImage) para la imagen.
+    - @else if (searched): si ya se buscó y no se encontró, se muestra un aviso.
+    - aria-live="polite" hace que los lectores de pantalla anuncien el cambio.
+  -->
+  <div aria-live="polite">
+    @if (selectedArticulo) {
+      <article class="product-card">
+        <div class="product-card__image">
+          <img [ngSrc]="selectedArticulo.image" [alt]="selectedArticulo.title" fill />
+        </div>
+        <h2 class="product-card__title">{{ selectedArticulo.title }}</h2>
+        <p class="product-card__category">{{ selectedArticulo.category }}</p>
+        <p class="product-card__price">{{ selectedArticulo.price }} €</p>
+        <p class="product-card__rating">
+          ★ {{ selectedArticulo.rating.rate }} ({{ selectedArticulo.rating.count }} valoraciones)
+        </p>
+      </article>
+    } @else if (searched) {
+      <p class="product-search__empty">No existe ningún artículo con ese id.</p>
+    }
+  </div>
+</section>

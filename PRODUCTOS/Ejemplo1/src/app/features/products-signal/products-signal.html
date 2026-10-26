@@ -1,0 +1,59 @@
+<section aria-labelledby="products-signal-title">
+  <h2 id="products-signal-title" class="products-signal-title">Productos con signal</h2>
+
+  <!--
+    Alta de un producto nuevo con signal:
+    - (click) llama a addProduct(), que añade newProduct con products.update().
+    - [disabled]="added" desactiva el botón una vez dado de alta, para no repetirlo.
+  -->
+  <div class="products-signal-actions">
+    <button type="button" (click)="addProduct()" [disabled]="added">Dar de alta producto</button>
+    <p class="products-signal-status" aria-live="polite">
+      @if (added) {
+        Producto «{{ newProduct.title }}» dado de alta.
+      }
+    </p>
+  </div>
+
+  <!--
+    Comparación con zoneless (setTimeout):
+    - (click) llama a addProductWithTimeout(), que actualiza el signal 2 segundos
+      después, dentro de un setTimeout.
+    - Al cambiar el valor del signal, Angular se entera aunque no haya zone.js:
+      la tarjeta aparece sola. No hace falta el botón «Comprobar vista» de ProductsArray.
+  -->
+  <div class="products-signal-actions">
+    <button type="button" (click)="addProductWithTimeout()" [disabled]="delayedRequested">
+      Dar de alta con setTimeout (2 s)
+    </button>
+    <p class="products-signal-status" aria-live="polite">
+      @if (delayedRequested) {
+        Producto «{{ delayedProduct.title }}» se añade al signal en 2 s. La tarjeta aparecerá sola.
+      }
+    </p>
+  </div>
+
+  <!--
+    Listado de productos guardados en un signal:
+    - products es un signal, así que para leer su valor se llama como una
+      función: products(). Devuelve el array de productos.
+    - @for recorre ese array igual que en ProductsArray, con track product.id.
+  -->
+  <ul class="products-signal-grid">
+    @for (product of products(); track product.id) {
+      <li>
+        <article class="product-card">
+          <div class="product-card__image">
+            <img [ngSrc]="product.image" [alt]="product.title" fill [priority]="$index < 5" />
+          </div>
+          <h3 class="product-card__title">{{ product.title }}</h3>
+          <p class="product-card__category">{{ product.category }}</p>
+          <p class="product-card__price">{{ product.price }} €</p>
+          <p class="product-card__rating">★ {{ product.rating.rate }} ({{ product.rating.count }} valoraciones)</p>
+        </article>
+      </li>
+    } @empty {
+      <li class="products-signal-empty">No hay productos.</li>
+    }
+  </ul>
+</section>

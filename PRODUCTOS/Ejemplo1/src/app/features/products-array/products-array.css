@@ -1,0 +1,92 @@
+.products-array-title {
+  margin: 2rem 0 1rem;
+}
+
+.products-array-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.products-array-status {
+  margin: 0;
+  color: #555;
+}
+
+/* 5 columnas por fila; en pantallas más estrechas se reducen para que las tarjetas no queden ilegibles */
+.products-array-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 1100px) {
+  .products-array-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .products-array-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 450px) {
+  .products-array-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+}
+
+/* Contenedor de la imagen: NgOptimizedImage en modo fill ocupa todo el contenedor,
+   que necesita position y un alto. object-fit: contain ajusta la imagen sin deformarla,
+   tenga la proporción que tenga. */
+.product-card__image {
+  position: relative;
+  height: 180px;
+}
+
+.product-card__image img {
+  object-fit: contain;
+}
+
+.product-card__title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.product-card__category {
+  margin: 0;
+  color: #555;
+  text-transform: capitalize;
+}
+
+.product-card__price {
+  margin: 0;
+  font-weight: bold;
+}
+
+.product-card__rating {
+  margin: 0;
+  color: #555;
+}
+
+.products-array-empty {
+  color: #555;
+}
