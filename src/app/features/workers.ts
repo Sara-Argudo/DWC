@@ -1,9 +1,7 @@
-import { Component, signal, effect, computed } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { CardWorker } from '../shared/components/card-worker';
 import { worker } from '../core/models/worker';
 import { WORKERS } from '../core/mocks/workers.mock';
-
-const CLAVE_STORAGE = 'trabajadores';
 
 @Component({
   imports: [CardWorker],
@@ -12,43 +10,9 @@ const CLAVE_STORAGE = 'trabajadores';
   templateUrl: './workers.html',
 })
 export class Workers {
+  private readonly CLAVE_STORAGE = 'trabajadores';
 
-  protected readonly workers =
-    signal<worker[]>(this.cargarTrabajadores());
-
-  protected readonly departamentoSeleccionado = signal('');
-
-  protected readonly departamentos = computed(() => {
-    const departamentos: string[] = [];
-
-    for (const t of this.workers()) {
-      if (!departamentos.includes(t.departamento)) {
-        departamentos.push(t.departamento);
-      }
-    }
-
-    return departamentos;
-  });
-
-  protected readonly totalTrabajadores = computed(() =>
-    this.workers().length
-  );
-
-  protected readonly totalFiltrados = computed(() =>
-    this.trabajadoresFiltrados().length
-  );
-
-  protected readonly trabajadoresFiltrados = computed(() => {
-    const departamento = this.departamentoSeleccionado();
-
-    if (departamento === '') {
-      return this.workers();
-    }
-
-    return this.workers().filter(
-      (w) => w.departamento === departamento
-    );
-  });
+  protected readonly workers = signal<worker[]>(this.cargarTrabajadores());
 
   constructor() {
     effect(() => this.guardarTrabajadores(this.workers()));
@@ -64,25 +28,8 @@ export class Workers {
 
   protected quitarLikes(id: number): void {
     this.workers.update((workers) =>
-      workers.map((w) => {
-        if (w.id === id) {
-          return { ...w, likes: 0 };
-        }
-
-        return w;
-      })
+      workers.map((w) => (w.id === id ? { ...w, likes: 0 } : w))
     );
-  }
-
-  protected eliminarTrabajador(id: number): void {
-    this.workers.update((workers) =>
-      workers.filter((w) => w.id !== id)
-    );
-  }
-
-  protected cambiarDepartamento(evento: Event): void {
-    const select = evento.target as HTMLSelectElement;
-    this.departamentoSeleccionado.set(select.value);
   }
 
   private cambiarLikes(id: number, cambio: number): void {
@@ -101,20 +48,69 @@ export class Workers {
     );
   }
 
+  protected eliminarTrabajador(id: number): void {
+    this.workers.update((workers) => workers.filter((w) => w.id !== id));
+  }
+
+  protected cambiarDepartamento(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.departamentoSeleccionado.set(target.value);
+  }
+
   private cargarTrabajadores(): worker[] {
-    const datos = localStorage.getItem(CLAVE_STORAGE);
+    const datos = localStorage.getItem(this.CLAVE_STORAGE);
 
     if (datos === null) {
       return WORKERS;
     }
 
-    return JSON.parse(datos);
+    try {
+      const parsed = JSON.parse(datos) as worker[];
+      if (!Array.isArray(parsed) || parsed.length < WORKERS.length) {
+        return WORKERS;
+      }
+      return parsed;
+    } catch {
+      return WORKERS;
+    }
   }
 
   private guardarTrabajadores(workers: worker[]): void {
-    localStorage.setItem(
-      CLAVE_STORAGE,
-      JSON.stringify(workers)
-    );
+    localStorage.setItem(this.CLAVE_STORAGE, JSON.stringify(workers));
   }
+
+  protected readonly departamentoSeleccionado = signal('');
+
+  protected readonly departamentos = computed(() => {
+    const departamentos: string[] = [];
+
+    for (const w of this.workers()) {
+      if (!departamentos.includes(w.departamento)) {
+        departamentos.push(w.departamento);
+      }
+    }
+
+    if (
+      this.departamentoSeleccionado() !== '' &&
+      !departamentos.includes(this.departamentoSeleccionado())
+    ) {
+      this.departamentoSeleccionado.set('');
+    }
+
+    return departamentos;
+  });
+
+  protected readonly trabajadoresFiltrados = computed(() => {
+    const departamento = this.departamentoSeleccionado();
+
+    if (departamento === '') {
+      return this.workers();
+    }
+
+    return this.workers().filter((w) => w.departamento === departamento);
+  });
+
+  protected readonly totalTrabajadores = computed(() => this.workers().length);
+
+  protected readonly totalFiltrados = computed(() => this.trabajadoresFiltrados().length);
 }
