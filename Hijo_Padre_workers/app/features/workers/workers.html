@@ -1,0 +1,32 @@
+<section class="trabajadores" aria-labelledby="titulo-trabajadores">
+    <h1 id="titulo-trabajadores">
+        Workers
+        <span class="totales">({{ totalFilteredWorkers() }} de {{ totalWorkers() }})</span>
+    </h1>
+
+    <div class="filtro">
+        <label for="filtro-departamento">Departamento</label>
+        <select id="filtro-departamento" (change)="setSelectedDepartmento($event)">
+            <option value="Todos" [selected]="selectedDepartamento() === 'Todos'">Todos</option>
+            @for (departamento of departamentos(); track departamento) {
+            <option [value]="departamento" [selected]="selectedDepartamento() === departamento">
+                {{ departamento }}
+            </option>
+            }
+        </select>
+    </div>
+
+    <ul class="grid">
+        @for (worker of filteredWorkers(); track worker.id) {
+        <li>
+            <app-card-worker [worker]="worker" 
+                (like)="darLike($event)" 
+                (unlike)="darUnlike($event)"
+                (quitarLikes)="quitarLikes($event)" 
+                (eliminar)="borrarWorker($event)" />
+        </li>
+        } @empty {
+        <li>No hay trabajadores.</li>
+        }
+    </ul>
+</section>

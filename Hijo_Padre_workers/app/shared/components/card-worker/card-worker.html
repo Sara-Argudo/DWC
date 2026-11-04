@@ -1,0 +1,28 @@
+<div class="worker">
+  <img class="foto" [src]="worker().imagen" [alt]="'Foto de ' + worker().nombre" width="128" height="128" />
+  <h2 class="nombre">{{ worker().nombre }}</h2>
+  <p class="puesto">{{ worker().puesto }}</p>
+  <p class="departamento">{{ worker().departamento }}</p>
+
+  <p class="likes">
+    <span aria-hidden="true">❤️</span>
+    {{ worker().likes }} {{ worker().likes === 1 ? 'like' : 'likes' }}
+  </p>
+
+  <div class="acciones" role="group" [attr.aria-label]="'Valorar a ' + worker().nombre">
+    <button type="button" class="boton like" (click)="darLike()">
+      <span aria-hidden="true">👍</span> Like
+    </button>
+    <button type="button" class="boton unlike" (click)="darUnlike()">
+      <span aria-hidden="true">👎</span> Unlike
+    </button>
+    <button type="button" class="boton quitar" (click)="quitarTodosLosLikes()">
+      <span aria-hidden="true">🗑️</span> Quitar likes
+    </button>
+  </div>
+
+  <button type="button" class="boton eliminar" [attr.aria-label]="'Eliminar a ' + worker().nombre"
+    (click)="eliminarTrabajador()">
+    <span aria-hidden="true">❌</span> Eliminar
+  </button>
+</div>
